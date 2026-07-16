@@ -33,7 +33,7 @@ func (s *ArticleServiceImpl) Feed(ctx context.Context, limit uint64, offset uint
 		filteredArticle = append(filteredArticle, entities.Article{
 			ID:          article.ID,
 			Title:       article.Title,
-			Content:     (article.Content[50:]) + " ...",
+			Content:     (article.Content[:150]) + " ...",
 			Category:    article.Category,
 			Status:      article.Status,
 			CreatedDate: article.CreatedDate,
@@ -64,7 +64,7 @@ func (s *ArticleServiceImpl) Find(ctx context.Context, userEmail string, status 
 		filteredArticle = append(filteredArticle, entities.Article{
 			ID:          article.ID,
 			Title:       article.Title,
-			Content:     (article.Content[200:]) + " ...",
+			Content:     (article.Content[:100]) + " ...",
 			Category:    article.Category,
 			Status:      article.Status,
 			CreatedDate: article.CreatedDate,
