@@ -25,7 +25,7 @@ func (m *ArticleModuleImpl) Name() string {
 }
 
 func (m *ArticleModuleImpl) RegisterRoutes(mux *http.ServeMux) {
-	mux.Handle("GET /feed/{limit}/{offset}", m.protect(permissions.ArticleRead, m.ArticleController.Feed))
+	mux.HandleFunc("GET /feed/{limit}/{offset}", m.ArticleController.Feed)
 	mux.Handle("POST /article/{$}", m.protect(permissions.ArticleWrite, m.ArticleController.Create))
 	mux.Handle("GET /article/{limit}/{offset}", m.protect(permissions.ArticleRead, m.ArticleController.Find))
 	mux.Handle("GET /article/{id}", m.auth.LoadUserContext(m.ArticleController.FindByID))
