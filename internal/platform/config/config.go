@@ -13,6 +13,7 @@ type Config struct {
 	Logger   LoggerConfig
 	Database DatabaseConfig
 	Redis    RedisConfig
+	Auth     AuthConfig
 }
 
 type AppConfig struct {
@@ -39,6 +40,12 @@ type RedisConfig struct {
 	DB       int
 }
 
+type AuthConfig struct {
+	ServerURL string
+	AppCode   string
+	Timeout   time.Duration
+}
+
 func Load() Config {
 	_ = godotenv.Load()
 
@@ -62,6 +69,11 @@ func Load() Config {
 			Username: env("REDIS_USERNAME", ""),
 			Password: env("REDIS_PASSWORD", ""),
 			DB:       intEnv("REDIS_DB", 0),
+		},
+		Auth: AuthConfig{
+			ServerURL: env("AUTH_SERVER_URL", "https://go-be.logstack.web.id"),
+			AppCode:   env("AUTH_APP_CODE", "sv-blog"),
+			Timeout:   durationEnv("AUTH_TIMEOUT", 10*time.Second),
 		},
 	}
 }

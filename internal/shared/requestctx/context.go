@@ -11,7 +11,28 @@ const (
 	requestIDKey contextKey = "request_id"
 	languageKey  contextKey = "language"
 	startTimeKey contextKey = "start_time"
+	authUserKey  contextKey = "auth_user"
 )
+
+type AuthUser struct {
+	ID          int64
+	Email       string
+	Username    string
+	DisplayName string
+}
+
+func WithAuthUser(ctx context.Context, user AuthUser) context.Context {
+	return context.WithValue(ctx, authUserKey, user)
+}
+
+func CurrentUser(ctx context.Context) (AuthUser, bool) {
+	if ctx == nil {
+		return AuthUser{}, false
+	}
+
+	user, ok := ctx.Value(authUserKey).(AuthUser)
+	return user, ok
+}
 
 func WithRequestID(ctx context.Context, requestID string) context.Context {
 	return context.WithValue(ctx, requestIDKey, requestID)
